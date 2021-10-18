@@ -394,7 +394,7 @@ class Table:
                         else:
                             h.result = HandResults.LOST     
 
-    def printResults(self):
+    def printVerboseResults(self):
         result = "Dealer FaceCard = " + str(self.dealer.hand.cards[0])
         result += ", Total = " + str(self.dealer.hand.getHandTotal())
         result += ", BJ = " + str(self.dealer.hand.isBlackJack())
@@ -416,7 +416,7 @@ class Table:
 
         return result
 
-    def printMLResults(self):
+    def printShortResults(self):
         result = str(self.dealer.hand.cards[0])
         
         for i in range (0, len(self.players)):
@@ -459,18 +459,26 @@ class Table:
 
                 result += ", " + str(value)
         return result
+    
+    def reset(self):
+        for player in self.players:
+            player.reset()
+        
+        self.dealer.reset()
+
+        if self.shoe.needShuffle():
+            self.shoe.shuffle()
+
 
 table = Table()
 
 table.players.append(Player())
 print("Round, Dealer FaceCard, Player Card 1, Card 2, Total, Soft Hand, Is BlackJack, Busted, Action, Result, Value")
 
-for i in range(0, 1000):        # Number of hands to play
+for i in range(0, 1000):        # Simulates 1,000 rounds of BlackJack
     table.playRound()
-    print(str(i) + ", " + table.printMLResults())
-#    print("Round " + str(i) + ": " + table.printResults())     # More verbose printout of each hand played
+    print(str(i) + ", " + table.printShortResults())
+#    print("Round " + str(i) + ": " + table.printVerboseResults())     # More verbose printout of each hand played
 #    print("\n")
 
-    for player in table.players:
-        player.reset()
-    table.dealer.reset()
+    table.reset()
