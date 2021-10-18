@@ -49,6 +49,15 @@ for i in range(0, 1000):        # Simulates 1,000 rounds of BlackJack
     table.reset()
 ```
 
+The results include a "Value" for the hand that ranges from -2.0 to 2.0:
+* -1.0 Means a normal loss for a hand
+* +1.0 Means a normal win for a hand
+* -2.0 Means a Double-Downed round was lost
+* +2.0 Means a Double-Downed round was won
+* +1.2 Means a BlackJack win
+* -0.5 Means a loss by surrender
+
+## The Classes
 
 ### The Shoe
 The Shoe is designed to be extremely simple. When its initialized (or shuffled), it simply creates an array of 52 x [Num of Decks] elements numbered from 1 to 52. When a card is needed from the Shoe via getCard(), the Shoe randomly picks an array element and removes it from the array and returns it as the card. However, prior to returning the card, it first does a "% 13" operation to simulate a card from 1 (Ace) to 13 (King), and since in BlackJack, a 10, Jack, Queen and King are all 10s, if the card is >= 10, it returns a 10.
