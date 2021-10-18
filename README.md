@@ -1,4 +1,4 @@
-# BlackJack Simulator
+# BlackJack Simulator (in Python)
 A BlackJack simulator to play any number of hands using different strategies
 
 ## The Rules
@@ -21,8 +21,8 @@ The way this code is structured is:
 
 To simulate a round of BlackJack, you simply:
 1. Create a Table object (which creates a dealer and shoe with 8 decks by default)
-1. Add a player to tha table
-1. And then you call Table.playRound to play 1 round of BlackJack.
+1. Add a player to the table
+1. And then you call Table.playRound() to play 1 round of BlackJack.
 1. The table then needs to reset using the Table.reset() method to play another hand.
 
 The results of each hand is stored in the hand itself.
@@ -59,10 +59,10 @@ The results include a "Value" for the hand that ranges from -2.0 to 2.0:
 
 ## The Classes
 
-### The Shoe
+### The Shoe Class
 The Shoe is designed to be extremely simple. When its initialized (or shuffled), it simply creates an array of 52 x [Num of Decks] elements numbered from 1 to 52. When a card is needed from the Shoe via getCard(), the Shoe randomly picks an array element and removes it from the array and returns it as the card. However, prior to returning the card, it first does a "% 13" operation to simulate a card from 1 (Ace) to 13 (King), and since in BlackJack, a 10, Jack, Queen and King are all 10s, if the card is >= 10, it returns a 10.
 
-### The Hand
+### The Hand Class
 A lot of the logic on how to play a hand is in the Hand class.
 
 The Hand class has 3 main methods on how the hand will be played:
@@ -70,14 +70,14 @@ The Hand class has 3 main methods on how the hand will be played:
 * randomPlay - This plays using a random allowed action. Results of this could be used to train machine learning alogrithms.
 * dealerPlay - This plays using standard BlackJack dealer play strategy.
 
-The getHandTotal() method is also useful to get the hand total, which takes into consideration soft hands (where an Ace is counted as an 11). If a hand total is considered to be a soft hand, it also sets the "softHand" variable that's passed in to true.
+The getHandTotal() method is also useful to get the hand total, which takes into consideration soft hands (a hand with an Ace that is counted as an 11). If a hand total is considered to be a soft hand, it also sets the "softHand" variable that's passed in to true.
 
-### The Player and Dealer classes
+### The Player and Dealer Classes
 Since most of the logic for how the hand is played is actually in the Hand class, the Player and Dealer objects are just wrappers to hold a hand. Ideally, it might make sense to refactor the code to put the "play" methods into the Player and Dealer classes rather than the Hand class.
 
 Another potential refactor might make the Dealer a kind of Player rather than its own class.
 
-### The Table class
+### The Table Class
 The Table class is where the bulk of the action is.
 
 When the table "playRound()" is called, the table first deals the first 2 cards as no logic is needed prior to dealing the first 2 cards to all players and the dealer. If the dealer doesn't have a BlackJack, it then continues the play.
